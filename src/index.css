@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #F1EFE8;
+  color: #2C2C2A;
+}
+
+@layer components {
+  .input-field {
+    @apply w-full border border-border rounded-xl px-3 py-2.5 text-sm text-text-primary outline-none focus:border-gray-400 bg-white;
+  }
+  .input-field-readonly {
+    @apply w-full border border-border rounded-xl px-3 py-2.5 text-sm text-text-secondary bg-page-bg;
+  }
+}
