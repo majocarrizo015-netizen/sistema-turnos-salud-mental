@@ -8,51 +8,89 @@ import BadgePrioridad from '../../components/BadgePrioridad'
 export default function HistorialAPS() {
   const { user } = useAuth()
   const navigate = useNavigate()
-  const [list, setList] = useState([])
-  const [search, setSearch] = useState('')
+  const [solicitudes, setSolicitudes] = useState([])
   const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
 
-  useEffect(() => { fetchData() }, [user])
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await supabase
+        .from('solicitudes')
+        .select('*, pacientes(*)')
+        .eq('profesional_id', user.id)
+        .in('estado', ['finalizado', 'baja_protocolo'])
+        .order('fecha_solicitud', { ascending: false })
+      if (data) setSolicitudes(data)
+      setLoading(false)
+    }
+    fetchData()
+  }, [user.id])
 
-  const fetchData = async () => {
-    const { data } = await supabase.from('solicitudes').select('*, pacientes(*)').eq('profesional_id', user.id).in('estado', ['finalizado', 'baja_protocolo']).order('fecha_solicitud', { ascending: false })
-    setList(data || [])
-    setLoading(false)
-  }
-
-  const filtered = list.filter(s => {
+  const filtered = solicitudes.filter(s => {
     if (!search) return true
     const q = search.toLowerCase()
-    return s.pacientes?.nombre?.toLowerCase().includes(q) || s.pacientes?.apellido?.toLowerCase().includes(q) || s.pacientes?.dni?.includes(q)
+    return (
+      s.pacientes?.nombre?.toLowerCase().includes(q) ||
+      s.pacientes?.apellido?.toLowerCase().includes(q) ||
+      s.pacientes?.dni?.includes(q)
+    )
   })
 
+  const estadoConfig = {
+    finalizado: { label: 'Finalizado', color: '#1D9E75', bg: '#E1F5EE' },
+    baja_protocolo: { label: 'Baja Protocolo', color: '#993C1D', bg: '#FAECE7' },
+  }
+
   return (
-    <div className="min-h-screen bg-page-bg font-roboto pb-8">
-      <TopBar title="Historial" showBack rol="medico_aps" />
-      <div className="max-w-2xl mx-auto px-4 py-4 space-y-3">
-        <div className="relative">
+    <div className="min-h-screen bg-page-bg">
+      <TopBar title="Historial" showBack backTo="/aps/panel" rol="medico_aps" />
+
+      <div className="max-w-2xl mx-auto px-4 py-4">
+        <div className="relative mb-4">
           <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar" className="w-full bg-surface border border-border rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none" />
+          <input
+            type="text"
+            placeholder="Buscar derivación..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-border bg-white text-sm text-text-primary outline-none"
+            style={{ '--tw-ring-color': '#7C3AAB' }}
+          />
         </div>
-        {loading ? <p className="text-center text-text-secondary text-sm py-8">Cargando...</p>
-          : filtered.length === 0 ? <p className="text-center text-text-secondary text-sm py-8">No registra Pacientes</p>
-          : filtered.map(s => (
-            <button key={s.id} onClick={() => navigate(`/aps/ficha/${s.id}`)} className="w-full bg-surface border border-border rounded-2xl p-4 text-left hover:shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-text-secondary" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+
+        {loading ? (
+          <div className="text-center py-10 text-text-secondary text-sm">Cargando...</div>
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-10 text-text-secondary text-sm">Sin registros en historial</div>
+        ) : (
+          <div className="space-y-2">
+            {filtered.map(s => {
+              const cfg = estadoConfig[s.estado] || { label: s.estado, color: '#888780', bg: '#F1EFE8' }
+              return (
+                <div
+                  key={s.id}
+                  onClick={() => navigate(`/aps/ficha/${s.id}`)}
+                  className="bg-white rounded-xl border border-border p-4 cursor-pointer transition-colors"
+                  style={{ '--hover-border': '#7C3AAB' }}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="font-medium text-text-primary text-sm">{s.pacientes?.apellido}, {s.pacientes?.nombre}</p>
+                      <p className="text-xs text-text-secondary">DNI: {s.pacientes?.dni} · Módulo {s.modulo}</p>
+                      <p className="text-xs text-text-secondary mt-0.5">{new Date(s.fecha_solicitud).toLocaleDateString('es-AR')}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <BadgePrioridad prioridad={s.prioridad} />
+                      <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: cfg.bg, color: cfg.color }}>{cfg.label}</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-text-primary">{s.pacientes?.apellido}, {s.pacientes?.nombre}</p>
-                  <p className="text-xs text-text-secondary">Módulo {s.modulo} · {s.estado === 'baja_protocolo' ? 'Baja protocolo' : 'Finalizado'}</p>
-                </div>
-                <BadgePrioridad prioridad={s.prioridad} />
-              </div>
-            </button>
-          ))
-        }
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )
