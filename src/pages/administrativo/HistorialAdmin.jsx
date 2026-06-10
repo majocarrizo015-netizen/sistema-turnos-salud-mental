@@ -54,7 +54,7 @@ export default function HistorialAdmin() {
             placeholder="Buscar paciente o profesional..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-border bg-white text-sm text-text-primary outline-none focus:border-administrativo-primary"
+            className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-border bg-white text-sm text-text-primary outline-none focus:border-administrativo-primary"
           />
         </div>
 
@@ -70,7 +70,7 @@ export default function HistorialAdmin() {
                 <div
                   key={s.id}
                   onClick={() => navigate(`/admin/asistencia/${s.id}`)}
-                  className="bg-white rounded-xl border border-border p-4 cursor-pointer hover:border-administrativo-primary transition-colors"
+                  className="bg-white rounded-lg border border-border p-4 cursor-pointer hover:border-administrativo-primary transition-colors"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">

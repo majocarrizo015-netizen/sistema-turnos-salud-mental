@@ -55,7 +55,7 @@ export default function HistorialAPS() {
             placeholder="Buscar derivación..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-border bg-white text-sm text-text-primary outline-none"
+            className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-border bg-white text-sm text-text-primary outline-none"
             style={{ '--tw-ring-color': '#7C3AAB' }}
           />
         </div>
@@ -72,7 +72,7 @@ export default function HistorialAPS() {
                 <div
                   key={s.id}
                   onClick={() => navigate(`/aps/ficha/${s.id}`)}
-                  className="bg-white rounded-xl border border-border p-4 cursor-pointer transition-colors"
+                  className="bg-white rounded-lg border border-border p-4 cursor-pointer transition-colors"
                   style={{ '--hover-border': '#7C3AAB' }}
                 >
                   <div className="flex items-start justify-between gap-2">

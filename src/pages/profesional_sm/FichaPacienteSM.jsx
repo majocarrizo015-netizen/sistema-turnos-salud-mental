@@ -123,14 +123,14 @@ export default function FichaPacienteSM() {
         {(solicitud.estado === 'en_tratamiento' || solicitud.estado === 'pendiente') && (
           <button
             onClick={() => navigate(`/sm/ampliacion/${solicitudId}`)}
-            className="w-full py-3 rounded-xl border border-profesional-sm-primary text-profesional-sm-primary text-sm font-medium"
+            className="w-full py-3 rounded-lg border border-profesional-sm-primary text-profesional-sm-primary text-sm font-medium"
           >
             Solicitar más sesiones
           </button>
         )}
         <button
           onClick={() => navigate('/sm/panel')}
-          className="w-full py-3 rounded-xl border border-border text-text-secondary text-sm"
+          className="w-full py-3 rounded-lg border border-border text-text-secondary text-sm"
         >
           Salir
         </button>

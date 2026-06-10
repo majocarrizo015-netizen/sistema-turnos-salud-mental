@@ -52,7 +52,7 @@ export default function Login() {
               value={dni}
               onChange={e => { setDni(e.target.value); setError(false) }}
               placeholder="DNI"
-              className={`w-full border rounded-xl px-4 py-3 text-sm text-text-primary focus:outline-none focus:ring-2 ${
+              className={`w-full border rounded-lg px-4 py-3 text-sm text-text-primary focus:outline-none focus:ring-2 ${
                 error ? 'border-urgente focus:ring-urgente/30' : 'border-border focus:ring-profesional-sm-primary/30'
               }`}
             />
@@ -64,7 +64,7 @@ export default function Login() {
             <select
               value={rol}
               onChange={e => setRol(e.target.value)}
-              className="w-full border border-border rounded-xl px-4 py-3 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-profesional-sm-primary/30 bg-white"
+              className="w-full border border-border rounded-lg px-4 py-3 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-profesional-sm-primary/30 bg-white"
             >
               <option value="">Seleccione rol</option>
               {rolOptions.map(o => (
@@ -76,7 +76,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl text-white font-medium text-sm mt-2 transition-opacity disabled:opacity-60"
+            className="w-full py-3 rounded-lg text-white font-medium text-sm mt-2 transition-opacity disabled:opacity-60"
             style={{ backgroundColor: rolOptions.find(o => o.value === rol)?.color || '#534AB7' }}
           >
             {loading ? 'Verificando...' : 'Ingresar'}

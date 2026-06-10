@@ -101,14 +101,14 @@ export default function PanelSM() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Buscar"
-            className="w-full bg-surface border border-border rounded-xl pl-9 pr-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-profesional-sm-primary/30"
+            className="w-full bg-surface border border-border rounded-lg pl-9 pr-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-profesional-sm-primary/30"
           />
         </div>
 
         {/* Nueva Solicitud */}
         <button
           onClick={() => navigate('/sm/nueva-solicitud')}
-          className="w-full py-3 rounded-xl text-white font-medium text-sm bg-profesional-sm-primary"
+          className="w-full py-3 rounded-lg text-white font-medium text-sm bg-profesional-sm-primary"
         >
           Nueva Solicitud
         </button>

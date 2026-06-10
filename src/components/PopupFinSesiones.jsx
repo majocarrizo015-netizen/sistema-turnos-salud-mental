@@ -17,13 +17,13 @@ export default function PopupFinSesiones({ modulo, onEnviarHistorial, onAgregarS
           <div className="flex flex-col gap-2 w-full">
             <button
               onClick={onEnviarHistorial}
-              className="w-full py-2.5 rounded-xl border border-border text-sm text-text-primary font-medium hover:bg-gray-50"
+              className="w-full py-2.5 rounded-lg border border-border text-sm text-text-primary font-medium hover:bg-gray-50"
             >
               Enviar a Historial
             </button>
             <button
               onClick={onAgregarSesiones}
-              className="w-full py-2.5 rounded-xl bg-administrativo-primary text-white text-sm font-medium"
+              className="w-full py-2.5 rounded-lg bg-administrativo-primary text-white text-sm font-medium"
             >
               Agregar Sesiones
             </button>

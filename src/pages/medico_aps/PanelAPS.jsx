@@ -64,7 +64,7 @@ export default function PanelAPS() {
     <div className="min-h-screen bg-page-bg">
       <TopBar
         title="Mis Derivaciones"
-        subtitle={`${user.nombre} ${user.apellido} — Mat. ${user.matricula || 'N/A'}`}
+        subtitle={`${user.nombre} ${user.apellido} · Mat. ${user.matricula || 'N/A'}`}
         rol="medico_aps"
       />
 
@@ -79,12 +79,12 @@ export default function PanelAPS() {
               placeholder="Buscar derivación..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-border bg-white text-sm text-text-primary outline-none focus:border-medico-aps-primary"
+              className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-border bg-white text-sm text-text-primary outline-none focus:border-medico-aps-primary"
             />
           </div>
           <button
             onClick={() => navigate('/aps/nueva-solicitud')}
-            className="px-4 py-2.5 rounded-xl text-white text-sm font-medium whitespace-nowrap flex items-center gap-1.5"
+            className="px-4 py-2.5 rounded-lg text-white text-sm font-medium whitespace-nowrap flex items-center gap-1.5"
             style={{ backgroundColor: '#7C3AAB' }}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -101,14 +101,14 @@ export default function PanelAPS() {
             <section className="mb-6">
               <h2 className="text-xs font-medium text-text-secondary uppercase tracking-wide mb-2">Pendientes de Asignación ({pendientes.length})</h2>
               {pendientes.length === 0 ? (
-                <div className="bg-white rounded-xl border border-border p-4 text-sm text-text-secondary text-center">No hay derivaciones pendientes</div>
+                <div className="bg-white rounded-lg border border-border p-4 text-sm text-text-secondary text-center">No hay derivaciones pendientes</div>
               ) : (
                 <div className="space-y-2">
                   {pendientes.map(s => (
                     <div
                       key={s.id}
                       onClick={() => navigate(`/aps/ficha/${s.id}`)}
-                      className="bg-white rounded-xl border border-border p-4 cursor-pointer hover:border-medico-aps-primary transition-colors"
+                      className="bg-white rounded-lg border border-border p-4 cursor-pointer hover:border-medico-aps-primary transition-colors"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
@@ -127,7 +127,7 @@ export default function PanelAPS() {
             <section className="mb-6">
               <h2 className="text-xs font-medium text-text-secondary uppercase tracking-wide mb-2">Mis Pacientes en Tratamiento ({enTratamiento.length})</h2>
               {enTratamiento.length === 0 ? (
-                <div className="bg-white rounded-xl border border-border p-4 text-sm text-text-secondary text-center">No hay pacientes en tratamiento</div>
+                <div className="bg-white rounded-lg border border-border p-4 text-sm text-text-secondary text-center">No hay pacientes en tratamiento</div>
               ) : (
                 <div className="space-y-2">
                   {enTratamiento.map(s => {
@@ -136,7 +136,7 @@ export default function PanelAPS() {
                       <div
                         key={s.id}
                         onClick={() => navigate(`/aps/ficha/${s.id}`)}
-                        className="bg-white rounded-xl border border-border p-4 cursor-pointer hover:border-medico-aps-primary transition-colors"
+                        className="bg-white rounded-lg border border-border p-4 cursor-pointer hover:border-medico-aps-primary transition-colors"
                       >
                         <div className="flex items-start justify-between gap-2 mb-3">
                           <div className="min-w-0">
@@ -155,7 +155,7 @@ export default function PanelAPS() {
 
             <button
               onClick={() => navigate('/aps/historial')}
-              className="w-full py-3 rounded-xl border border-border bg-white text-sm text-text-secondary flex items-center justify-center gap-2 hover:border-medico-aps-primary transition-colors"
+              className="w-full py-3 rounded-lg border border-border bg-white text-sm text-text-secondary flex items-center justify-center gap-2 hover:border-medico-aps-primary transition-colors"
             >
               Ver Historial
             </button>

@@ -82,7 +82,7 @@ export default function PanelAdmin() {
             placeholder="Buscar paciente o profesional..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-border bg-white text-sm text-text-primary outline-none focus:border-administrativo-primary"
+            className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-border bg-white text-sm text-text-primary outline-none focus:border-administrativo-primary"
           />
         </div>
 
@@ -113,7 +113,7 @@ export default function PanelAdmin() {
                   <div
                     key={s.id}
                     onClick={() => navigate(`/admin/asistencia/${s.id}`)}
-                    className="bg-white rounded-xl border border-border p-4 cursor-pointer hover:border-administrativo-primary transition-colors"
+                    className="bg-white rounded-lg border border-border p-4 cursor-pointer hover:border-administrativo-primary transition-colors"
                   >
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <div className="min-w-0">
@@ -146,7 +146,7 @@ export default function PanelAdmin() {
 
             <button
               onClick={() => navigate('/admin/historial')}
-              className="w-full py-3 rounded-xl border border-border bg-white text-sm text-text-secondary flex items-center justify-center gap-2 hover:border-administrativo-primary transition-colors"
+              className="w-full py-3 rounded-lg border border-border bg-white text-sm text-text-secondary flex items-center justify-center gap-2 hover:border-administrativo-primary transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -170,14 +170,14 @@ function Section({ title, children }) {
 }
 
 function EmptyState({ text }) {
-  return <div className="bg-white rounded-xl border border-border p-4 text-sm text-text-secondary text-center">{text}</div>
+  return <div className="bg-white rounded-lg border border-border p-4 text-sm text-text-secondary text-center">{text}</div>
 }
 
 function SolicitudCard({ s, onClick, label, color, subtitle }) {
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-xl border border-border p-4 cursor-pointer hover:shadow-sm transition-shadow"
+      className="bg-white rounded-lg border border-border p-4 cursor-pointer hover:shadow-sm transition-shadow"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0 flex-1">

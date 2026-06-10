@@ -120,7 +120,7 @@ export default function AmpliacionSesiones() {
               onChange={e => setForm(f => ({ ...f, justificacion: e.target.value }))}
               rows={4}
               placeholder="Describa la justificación clínica para la ampliación..."
-              className="w-full border border-border rounded-xl px-3 py-2.5 text-sm text-text-primary outline-none focus:border-profesional-sm-primary resize-none"
+              className="w-full border border-border rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none focus:border-profesional-sm-primary resize-none"
             />
           </div>
         </div>
@@ -128,7 +128,7 @@ export default function AmpliacionSesiones() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="w-full py-3 rounded-xl bg-profesional-sm-primary text-white text-sm font-medium disabled:opacity-60"
+          className="w-full py-3 rounded-lg bg-profesional-sm-primary text-white text-sm font-medium disabled:opacity-60"
         >
           {saving ? 'Guardando...' : 'Guardar'}
         </button>

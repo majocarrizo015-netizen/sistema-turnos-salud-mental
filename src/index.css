@@ -2,20 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+*, *::before, *::after {
   font-family: 'Roboto', sans-serif;
 }
 
 body {
   background-color: #F1EFE8;
   color: #2C2C2A;
+  font-family: 'Roboto', sans-serif;
 }
 
 @layer components {
   .input-field {
-    @apply w-full border border-border rounded-xl px-3 py-2.5 text-sm text-text-primary outline-none focus:border-gray-400 bg-white;
+    @apply w-full border border-border rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none focus:border-gray-400 bg-white font-normal;
   }
   .input-field-readonly {
-    @apply w-full border border-border rounded-xl px-3 py-2.5 text-sm text-text-secondary bg-page-bg;
+    @apply w-full border border-border rounded-lg px-3 py-2.5 text-sm text-text-secondary bg-page-bg font-normal;
+  }
+  .card {
+    @apply bg-surface border border-border rounded-lg;
   }
 }

@@ -139,7 +139,7 @@ export default function NuevaSolicitudSM() {
               <button
                 key={m}
                 onClick={() => selectModulo(m)}
-                className={`py-3 rounded-xl text-sm font-medium border transition-colors ${
+                className={`py-3 rounded-lg text-sm font-medium border transition-colors ${
                   form.modulo === m
                     ? 'bg-profesional-sm-primary text-white border-profesional-sm-primary'
                     : 'bg-white text-text-primary border-border hover:border-profesional-sm-primary'
@@ -205,7 +205,7 @@ export default function NuevaSolicitudSM() {
         <button
           onClick={handleSave}
           disabled={loading}
-          className="w-full py-3 rounded-xl bg-profesional-sm-primary text-white font-medium text-sm disabled:opacity-60"
+          className="w-full py-3 rounded-lg bg-profesional-sm-primary text-white font-medium text-sm disabled:opacity-60"
         >
           {loading ? 'Guardando...' : 'Guardar'}
         </button>

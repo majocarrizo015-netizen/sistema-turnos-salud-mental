@@ -43,7 +43,7 @@ export default function NotificacionesSM() {
 
       <div className="max-w-2xl mx-auto px-4 py-4">
         {/* Tabs */}
-        <div className="flex gap-1 mb-4 bg-white rounded-xl p-1 border border-border">
+        <div className="flex gap-1 mb-4 bg-white rounded-lg p-1 border border-border">
           {tabs.map(t => (
             <button
               key={t}
@@ -89,7 +89,7 @@ function NotifCard({ n, onClick, tipoLabels }) {
   return (
     <button
       onClick={() => onClick(n)}
-      className={`w-full text-left p-4 rounded-xl border transition-colors ${n.leida ? 'bg-white border-border' : 'bg-profesional-sm-light border-profesional-sm-primary/30'}`}
+      className={`w-full text-left p-4 rounded-lg border transition-colors ${n.leida ? 'bg-white border-border' : 'bg-profesional-sm-light border-profesional-sm-primary/30'}`}
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">

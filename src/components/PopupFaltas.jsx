@@ -35,14 +35,14 @@ export default function PopupFaltas({ data, onJustificar, onActivarProtocolo, on
               value={justificacion}
               onChange={e => setJustificacion(e.target.value)}
               placeholder="Ingrese la justificación..."
-              className="w-full border border-border rounded-xl p-3 text-sm text-text-primary resize-none h-24 focus:outline-none focus:border-protocolo"
+              className="w-full border border-border rounded-lg p-3 text-sm text-text-primary resize-none h-24 focus:outline-none focus:border-protocolo"
             />
             <div className="flex gap-2 mt-3">
-              <button onClick={() => setModo(null)} className="flex-1 py-2.5 rounded-xl border border-border text-sm text-text-secondary">Cancelar</button>
+              <button onClick={() => setModo(null)} className="flex-1 py-2.5 rounded-lg border border-border text-sm text-text-secondary">Cancelar</button>
               <button
                 onClick={() => onJustificar(sesionesAusentes[sesionesAusentes.length - 1].id, justificacion)}
                 disabled={!justificacion.trim()}
-                className="flex-1 py-2.5 rounded-xl bg-protocolo text-white text-sm font-medium disabled:opacity-50"
+                className="flex-1 py-2.5 rounded-lg bg-protocolo text-white text-sm font-medium disabled:opacity-50"
               >
                 Guardar
               </button>
@@ -52,13 +52,13 @@ export default function PopupFaltas({ data, onJustificar, onActivarProtocolo, on
           <div className="px-5 pb-5 flex flex-col gap-2">
             <button
               onClick={() => setModo('justificar')}
-              className="w-full py-2.5 rounded-xl border border-border text-sm text-text-primary font-medium hover:bg-gray-50"
+              className="w-full py-2.5 rounded-lg border border-border text-sm text-text-primary font-medium hover:bg-gray-50"
             >
               Justificar Falta
             </button>
             <button
               onClick={() => onActivarProtocolo(solicitud.id)}
-              className="w-full py-2.5 rounded-xl text-white text-sm font-medium"
+              className="w-full py-2.5 rounded-lg text-white text-sm font-medium"
               style={{ backgroundColor: '#993C1D' }}
             >
               Activar Protocolo

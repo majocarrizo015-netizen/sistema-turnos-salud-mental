@@ -129,7 +129,7 @@ export default function NuevaSolicitudAPS() {
         <div className="bg-white rounded-2xl border border-border p-4 space-y-3">
           <h2 className="text-xs font-medium uppercase tracking-wider mb-1" style={{ color: '#7C3AAB' }}>Datos Clínicos</h2>
 
-          <div className="bg-page-bg rounded-xl p-3 flex items-center justify-between">
+          <div className="bg-page-bg rounded-lg p-3 flex items-center justify-between">
             <span className="text-xs text-text-secondary">Módulo (fijo)</span>
             <span className="text-sm font-medium px-3 py-1 rounded-full text-white" style={{ backgroundColor: '#7C3AAB' }}>Módulo 1</span>
           </div>
@@ -151,7 +151,7 @@ export default function NuevaSolicitudAPS() {
                   key={p.v}
                   type="button"
                   onClick={() => set('prioridad', p.v)}
-                  className="flex-1 py-2 rounded-xl text-xs font-medium border transition-all"
+                  className="flex-1 py-2 rounded-lg text-xs font-medium border transition-all"
                   style={form.prioridad === p.v
                     ? { borderColor: p.color, backgroundColor: p.bg, color: p.color }
                     : { borderColor: '#D3D1C7', color: '#888780' }
@@ -170,7 +170,7 @@ export default function NuevaSolicitudAPS() {
               onChange={e => set('resumen_hc', e.target.value)}
               rows={5}
               placeholder="Describa el motivo de derivación y resumen de la historia clínica..."
-              className="w-full border border-border rounded-xl px-3 py-2.5 text-sm text-text-primary outline-none resize-none"
+              className="w-full border border-border rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none resize-none"
               style={{ '--tw-ring-color': '#7C3AAB' }}
             />
           </div>
@@ -179,7 +179,7 @@ export default function NuevaSolicitudAPS() {
         <button
           onClick={handleSave}
           disabled={loading}
-          className="w-full py-3 rounded-xl text-white text-sm font-medium disabled:opacity-60"
+          className="w-full py-3 rounded-lg text-white text-sm font-medium disabled:opacity-60"
           style={{ backgroundColor: '#7C3AAB' }}
         >
           {loading ? 'Enviando...' : 'Enviar Derivación'}

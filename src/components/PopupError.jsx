@@ -14,7 +14,7 @@ export default function PopupError({ message, onClose }) {
           <p className="text-text-secondary text-sm mb-5">{message}</p>
           <button
             onClick={onClose}
-            className="w-full py-2.5 rounded-xl bg-urgente text-white font-medium text-sm"
+            className="w-full py-2.5 rounded-lg bg-urgente text-white font-medium text-sm"
           >
             Cerrar
           </button>

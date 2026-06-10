@@ -14,7 +14,7 @@ export default function PopupSuccess({ message, onClose }) {
           <p className="text-text-secondary text-sm mb-5">{message}</p>
           <button
             onClick={onClose}
-            className="w-full py-2.5 rounded-xl bg-programado text-white font-medium text-sm"
+            className="w-full py-2.5 rounded-lg bg-programado text-white font-medium text-sm"
           >
             Aceptar
           </button>

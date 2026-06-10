@@ -113,7 +113,7 @@ export default function FichaPacienteAPS() {
 
         <button
           onClick={() => navigate('/aps/panel')}
-          className="w-full py-3 rounded-xl border border-border text-text-secondary text-sm"
+          className="w-full py-3 rounded-lg border border-border text-text-secondary text-sm"
         >
           Salir
         </button>

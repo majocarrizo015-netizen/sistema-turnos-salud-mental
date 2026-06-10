@@ -162,7 +162,7 @@ export default function AgregarSesionesAdmin() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="w-full py-3 rounded-xl bg-administrativo-primary text-white text-sm font-medium disabled:opacity-60"
+          className="w-full py-3 rounded-lg bg-administrativo-primary text-white text-sm font-medium disabled:opacity-60"
         >
           {saving ? 'Guardando...' : 'Guardar Sesiones'}
         </button>
