@@ -127,7 +127,7 @@ export default function FichaAsistencia() {
       }
     }
 
-    // Mail automático a Servicio Social vía Resend (best-effort)
+    // Mail automático a Servicio Social vía Edge Function / Gmail SMTP (best-effort)
     const fechas = (protocoloData?.sesionesAusentes || [])
       .map(s => s.fecha ? new Date(s.fecha + 'T00:00:00').toLocaleDateString('es-AR') : null)
       .filter(Boolean)

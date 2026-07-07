@@ -1,14 +1,18 @@
 // Supabase Edge Function: enviar-mail-servicio-social
 //
 // Envía el mail automático a Servicio Social cuando el admin activa el
-// protocolo de faltas. La API key de Resend vive como SECRETO del proyecto
-// (RESEND_API_KEY), nunca en el cliente.
+// protocolo de faltas. Usa SMTP de Gmail, de modo que el remitente es una
+// cuenta @gmail.com real. Las credenciales viven como SECRETOS del proyecto,
+// nunca en el cliente.
 //
 // Deploy:
 //   supabase functions deploy enviar-mail-servicio-social
-//   supabase secrets set RESEND_API_KEY=re_xxxxxxxx
+//   supabase secrets set GMAIL_USER=tucuenta@gmail.com
+//   supabase secrets set GMAIL_APP_PASSWORD=xxxxxxxxxxxxxxxx   (App Password de 16 dígitos)
 //
 // El cliente la invoca con supabase.functions.invoke('enviar-mail-servicio-social', { body })
+
+import { SMTPClient } from 'https://deno.land/x/denomailer@1.6.0/mod.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -18,8 +22,6 @@ const corsHeaders = {
 
 // Destinatario fijo de Servicio Social
 const DESTINATARIO = 'serviciosocialsamic@gmail.com'
-// Remitente: usar un dominio verificado en Resend en producción.
-const REMITENTE = 'Gestión Hospitalaria <onboarding@resend.dev>'
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -27,9 +29,10 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const apiKey = Deno.env.get('RESEND_API_KEY')
-    if (!apiKey) {
-      return json({ ok: false, error: 'missing_api_key' }, 500)
+    const gmailUser = Deno.env.get('GMAIL_USER')
+    const gmailPass = Deno.env.get('GMAIL_APP_PASSWORD')
+    if (!gmailUser || !gmailPass) {
+      return json({ ok: false, error: 'missing_gmail_credentials' }, 500)
     }
 
     const {
@@ -48,25 +51,24 @@ Deno.serve(async (req) => {
       `los días ${dias}. Solicitamos su intervención por abandono del tratamiento psicológico ` +
       `solicitado por ${derivanteNombre}.`
 
-    const resp = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
+    const client = new SMTPClient({
+      connection: {
+        hostname: 'smtp.gmail.com',
+        port: 465,
+        tls: true,
+        auth: { username: gmailUser, password: gmailPass },
       },
-      body: JSON.stringify({
-        from: REMITENTE,
-        to: [DESTINATARIO],
-        subject: asunto,
-        text: cuerpo,
-      }),
     })
 
-    const data = await resp.json()
-    if (!resp.ok) {
-      return json({ ok: false, error: data }, 502)
-    }
-    return json({ ok: true, id: data?.id })
+    await client.send({
+      from: `Gestión Hospitalaria <${gmailUser}>`,
+      to: DESTINATARIO,
+      subject: asunto,
+      content: cuerpo,
+    })
+    await client.close()
+
+    return json({ ok: true })
   } catch (err) {
     return json({ ok: false, error: String(err) }, 500)
   }

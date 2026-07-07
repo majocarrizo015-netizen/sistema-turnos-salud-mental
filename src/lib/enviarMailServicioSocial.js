@@ -3,12 +3,13 @@ import { supabase } from '../supabase'
 /**
  * Dispara el mail automático a Servicio Social cuando se activa el protocolo
  * de faltas. El envío real lo hace la Supabase Edge Function
- * `enviar-mail-servicio-social` (server-side), de modo que la API key de Resend
- * NUNCA queda expuesta en el cliente y se evita el bloqueo por CORS.
+ * `enviar-mail-servicio-social` (server-side, vía SMTP de Gmail), de modo que
+ * las credenciales NUNCA quedan expuestas en el cliente y se evita el CORS.
  *
- * Deploy de la función y secreto (una sola vez):
+ * Deploy de la función y secretos (una sola vez):
  *   supabase functions deploy enviar-mail-servicio-social
- *   supabase secrets set RESEND_API_KEY=re_xxxxxxxx
+ *   supabase secrets set GMAIL_USER=tucuenta@gmail.com
+ *   supabase secrets set GMAIL_APP_PASSWORD=xxxxxxxxxxxxxxxx
  *
  * Es best-effort: si falla, no interrumpe el flujo del protocolo de faltas.
  *
