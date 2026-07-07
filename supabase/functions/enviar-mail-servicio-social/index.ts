@@ -7,7 +7,7 @@
 //
 // Deploy:
 //   supabase functions deploy enviar-mail-servicio-social
-//   supabase secrets set GMAIL_USER=tucuenta@gmail.com
+//   supabase secrets set GMAIL_USER=gestionhospitalariasamic@gmail.com
 //   supabase secrets set GMAIL_APP_PASSWORD=xxxxxxxxxxxxxxxx   (App Password de 16 dígitos)
 //
 // El cliente la invoca con supabase.functions.invoke('enviar-mail-servicio-social', { body })
@@ -22,6 +22,8 @@ const corsHeaders = {
 
 // Destinatario fijo de Servicio Social
 const DESTINATARIO = 'serviciosocialsamic@gmail.com'
+// Remitente institucional por defecto (se puede sobreescribir con el secreto GMAIL_USER)
+const REMITENTE_DEFAULT = 'gestionhospitalariasamic@gmail.com'
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -29,9 +31,9 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const gmailUser = Deno.env.get('GMAIL_USER')
+    const gmailUser = Deno.env.get('GMAIL_USER') || REMITENTE_DEFAULT
     const gmailPass = Deno.env.get('GMAIL_APP_PASSWORD')
-    if (!gmailUser || !gmailPass) {
+    if (!gmailPass) {
       return json({ ok: false, error: 'missing_gmail_credentials' }, 500)
     }
 

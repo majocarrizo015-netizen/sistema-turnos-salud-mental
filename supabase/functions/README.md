@@ -9,8 +9,7 @@ credenciales nunca se exponen en el cliente.
 
 ### Requisitos
 - [Supabase CLI](https://supabase.com/docs/guides/cli) instalado y logueado.
-- Una cuenta de Gmail para el remitente (ideal una institucional, ej.
-  `saludmental.samic@gmail.com`).
+- La cuenta de Gmail remitente: `gestionhospitalariasamic@gmail.com`.
 - **Verificación en 2 pasos** activada en esa cuenta.
 - Una **Contraseña de aplicación** (App Password) de 16 dígitos:
   Cuenta de Google → Seguridad → Verificación en 2 pasos → Contraseñas de
@@ -22,7 +21,7 @@ credenciales nunca se exponen en el cliente.
 supabase link --project-ref <TU_PROJECT_REF>
 
 # 2. Cargar las credenciales de Gmail como secretos
-supabase secrets set GMAIL_USER=tucuenta@gmail.com
+supabase secrets set GMAIL_USER=gestionhospitalariasamic@gmail.com
 supabase secrets set GMAIL_APP_PASSWORD=xxxxxxxxxxxxxxxx   # App Password, sin espacios
 
 # 3. Desplegar la función
