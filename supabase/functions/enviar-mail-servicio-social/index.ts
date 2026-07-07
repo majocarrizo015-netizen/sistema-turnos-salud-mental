@@ -7,7 +7,7 @@
 //
 // Deploy:
 //   supabase functions deploy enviar-mail-servicio-social
-//   supabase secrets set GMAIL_USER=gestionhospitalariasamic@gmail.com
+//   supabase secrets set GMAIL_USER=dptogestionhospitalariasamic@gmail.com
 //   supabase secrets set GMAIL_APP_PASSWORD=xxxxxxxxxxxxxxxx   (App Password de 16 dígitos)
 //
 // El cliente la invoca con supabase.functions.invoke('enviar-mail-servicio-social', { body })
@@ -23,7 +23,7 @@ const corsHeaders = {
 // Destinatario fijo de Servicio Social
 const DESTINATARIO = 'serviciosocialsamic@gmail.com'
 // Remitente institucional por defecto (se puede sobreescribir con el secreto GMAIL_USER)
-const REMITENTE_DEFAULT = 'gestionhospitalariasamic@gmail.com'
+const REMITENTE_DEFAULT = 'dptogestionhospitalariasamic@gmail.com'
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
