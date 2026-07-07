@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import Logo from '../components/Logo'
 
 const rolOptions = [
   { value: 'profesional_sm', label: 'Profesional Salud Mental', color: '#534AB7' },
@@ -35,11 +36,7 @@ export default function Login() {
       <div className="bg-surface rounded-3xl shadow-lg p-8 w-full max-w-sm">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="w-20 h-20 rounded-full bg-urgente-bg flex items-center justify-center mb-3">
-            <svg className="w-12 h-12 text-urgente" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
-            </svg>
-          </div>
+          <Logo className="w-20 h-24 mb-3" />
           <h1 className="text-xl font-medium text-text-primary tracking-wide">SALUD MENTAL</h1>
           <p className="text-xs text-text-secondary mt-1 text-center">HOSPITAL SAMIC EL CALAFATE</p>
         </div>

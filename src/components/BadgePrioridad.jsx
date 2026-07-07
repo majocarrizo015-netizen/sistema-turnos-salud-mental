@@ -1,16 +1,32 @@
 import React from 'react'
 
+// Prioridades vigentes: alta (rojo) / moderada (amarillo) / programada (verde)
 const config = {
-  urgente: { label: 'Urgente', bg: 'bg-urgente-bg', text: 'text-urgente', border: 'border-urgente' },
-  prioritario: { label: 'Prioritario', bg: 'bg-prioritario-bg', text: 'text-prioritario', border: 'border-prioritario' },
-  programado: { label: 'Programado', bg: 'bg-programado-bg', text: 'text-programado', border: 'border-programado' },
+  alta: { label: 'Alta', bg: '#FCEBEB', color: '#E24B4A' },
+  moderada: { label: 'Moderada', bg: '#FAEEDA', color: '#EF9F27' },
+  programada: { label: 'Programada', bg: '#E1F5EE', color: '#1D9E75' },
+  // Compatibilidad con registros previos
+  urgente: { label: 'Alta', bg: '#FCEBEB', color: '#E24B4A' },
+  prioritario: { label: 'Alta', bg: '#FCEBEB', color: '#E24B4A' },
+  programado: { label: 'Programada', bg: '#E1F5EE', color: '#1D9E75' },
 }
 
 export default function BadgePrioridad({ prioridad }) {
-  const c = config[prioridad] || { label: prioridad, bg: 'bg-gray-100', text: 'text-gray-600', border: 'border-gray-300' }
+  if (!prioridad) return null
+  const c = config[prioridad] || { label: prioridad, bg: '#F1EFE8', color: '#888780' }
   return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${c.bg} ${c.text} ${c.border}`}>
+    <span
+      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border"
+      style={{ backgroundColor: c.bg, color: c.color, borderColor: c.color }}
+    >
       {c.label}
     </span>
   )
 }
+
+// Opciones para dropdowns/selectores de prioridad en formularios
+export const PRIORIDADES = [
+  { value: 'alta', label: 'Alta' },
+  { value: 'moderada', label: 'Moderada' },
+  { value: 'programada', label: 'Programada' },
+]

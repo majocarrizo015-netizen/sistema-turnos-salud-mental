@@ -6,6 +6,7 @@ import TopBar from '../../components/TopBar'
 import BadgePrioridad from '../../components/BadgePrioridad'
 import BadgeFrecuencia from '../../components/BadgeFrecuencia'
 import ProgressBar from '../../components/ProgressBar'
+import Comentarios from '../../components/Comentarios'
 
 const asistenciaConfig = {
   asistio: { label: 'Asistió', bg: '#E1F5EE', color: '#1D9E75' },
@@ -91,6 +92,29 @@ export default function FichaPacienteSM() {
           {total > 0 && <ProgressBar completed={completadas} total={total} color="#534AB7" />}
         </div>
 
+        {/* Derivación APS (cuando la solicitud tiene resumen de historia clínica) */}
+        {solicitud.resumen_hc && (
+          <div className="bg-white rounded-lg border p-4" style={{ borderColor: '#7C3AAB' }}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: '#F3E8FF', color: '#7C3AAB' }}>Derivación APS</span>
+            </div>
+            <div className="space-y-2 text-sm">
+              <div>
+                <p className="text-xs text-text-secondary">Médico derivante</p>
+                <p className="text-text-primary font-medium">{profesional?.nombre} {profesional?.apellido}{profesional?.matricula ? ` · Mat. ${profesional.matricula}` : ''}</p>
+              </div>
+              <div>
+                <p className="text-xs text-text-secondary">Diagnóstico presuntivo</p>
+                <p className="text-text-primary">{solicitud.diagnostico || '—'}</p>
+              </div>
+              <div>
+                <p className="text-xs text-text-secondary">Resumen historia clínica</p>
+                <p className="text-text-primary whitespace-pre-wrap">{solicitud.resumen_hc}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Sessions table */}
         {sesiones.length > 0 && (
           <div className="bg-white rounded-2xl border border-border overflow-hidden">
@@ -118,6 +142,9 @@ export default function FichaPacienteSM() {
             </div>
           </div>
         )}
+
+        {/* Comentarios */}
+        <Comentarios solicitudId={solicitudId} user={user} canAdd accent="#534AB7" />
 
         {/* Actions */}
         {(solicitud.estado === 'en_tratamiento' || solicitud.estado === 'pendiente') && (

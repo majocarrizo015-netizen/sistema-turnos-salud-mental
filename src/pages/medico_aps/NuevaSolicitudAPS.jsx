@@ -11,7 +11,7 @@ export default function NuevaSolicitudAPS() {
   const navigate = useNavigate()
   const [form, setForm] = useState({
     apellido: '', nombre: '', dni: '', fecha_nacimiento: '', obra_social: '', contacto: '',
-    diagnostico: '', prioridad: 'programado', resumen_hc: '',
+    diagnostico: '', prioridad: 'programada', resumen_hc: '',
   })
   const [popup, setPopup] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -143,9 +143,9 @@ export default function NuevaSolicitudAPS() {
             <label className="block text-xs text-text-secondary mb-1">Prioridad *</label>
             <div className="flex gap-2">
               {[
-                { v: 'urgente', label: 'Urgente', color: '#E24B4A', bg: '#FCEBEB' },
-                { v: 'prioritario', label: 'Prioritario', color: '#EF9F27', bg: '#FAEEDA' },
-                { v: 'programado', label: 'Programado', color: '#1D9E75', bg: '#E1F5EE' },
+                { v: 'alta', label: 'Alta', color: '#E24B4A', bg: '#FCEBEB' },
+                { v: 'moderada', label: 'Moderada', color: '#EF9F27', bg: '#FAEEDA' },
+                { v: 'programada', label: 'Programada', color: '#1D9E75', bg: '#E1F5EE' },
               ].map(p => (
                 <button
                   key={p.v}

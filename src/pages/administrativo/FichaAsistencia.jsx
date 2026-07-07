@@ -8,7 +8,9 @@ import ProgressBar from '../../components/ProgressBar'
 import PopupFaltas from '../../components/PopupFaltas'
 import PopupFinSesiones from '../../components/PopupFinSesiones'
 import PopupError from '../../components/PopupError'
+import Comentarios from '../../components/Comentarios'
 import { useProtocoloFaltas } from '../../hooks/useProtocoloFaltas'
+import { enviarMailServicioSocial } from '../../lib/enviarMailServicioSocial'
 
 const asistenciaColors = {
   asistio: { label: 'Asistió', bg: '#E1F5EE', color: '#1D9E75' },
@@ -92,31 +94,51 @@ export default function FichaAsistencia() {
 
   const handleActivarProtocolo = async (solId) => {
     await activarProtocolo(solId)
-    // Notify professional
-    if (solicitud?.usuarios?.id) {
+
+    const paciente = solicitud?.pacientes
+    const profesional = solicitud?.usuarios
+    const pacienteNombre = `${paciente?.nombre || ''} ${paciente?.apellido || ''}`.trim()
+    const profesionalNombre = `${profesional?.nombre || ''} ${profesional?.apellido || ''}`.trim()
+
+    // Notificación interna al profesional tratante (mensaje exacto)
+    if (profesional?.id) {
       await supabase.from('notificaciones').insert({
-        destinatario_id: solicitud.usuarios.id,
+        destinatario_id: profesional.id,
         tipo: 'protocolo_faltas',
-        mensaje: `Protocolo de faltas activado para ${solicitud.pacientes?.apellido}, ${solicitud.pacientes?.nombre}`,
+        mensaje: `El paciente ${pacienteNombre} DNI ${paciente?.dni} ha faltado a 2 sesiones consecutivas del Módulo ${solicitud?.modulo}. Se activó el protocolo de faltas.`,
         solicitud_id: solId,
         leida: false,
         fecha: new Date().toISOString(),
       })
     }
-    // Notify social service (find users with rol 'administrativo')
+
+    // Notificar internamente a Servicio Social (usuarios administrativos)
     const { data: admins } = await supabase.from('usuarios').select('id').eq('rol', 'administrativo')
     if (admins) {
       for (const a of admins) {
         await supabase.from('notificaciones').insert({
           destinatario_id: a.id,
           tipo: 'protocolo_faltas',
-          mensaje: `Protocolo de faltas activado: ${solicitud?.pacientes?.apellido}, ${solicitud?.pacientes?.nombre}`,
+          mensaje: `Protocolo de faltas activado: ${pacienteNombre} (DNI ${paciente?.dni}) — Módulo ${solicitud?.modulo}`,
           solicitud_id: solId,
           leida: false,
           fecha: new Date().toISOString(),
         })
       }
     }
+
+    // Mail automático a Servicio Social vía Resend (best-effort)
+    const fechas = (protocoloData?.sesionesAusentes || [])
+      .map(s => s.fecha ? new Date(s.fecha + 'T00:00:00').toLocaleDateString('es-AR') : null)
+      .filter(Boolean)
+    await enviarMailServicioSocial({
+      pacienteNombre,
+      pacienteDni: paciente?.dni,
+      profesionalNombre,
+      fechas,
+      derivanteNombre: profesionalNombre,
+    })
+
     setShowFinSesiones(true)
   }
 
@@ -226,6 +248,9 @@ export default function FichaAsistencia() {
             })}
           </div>
         </div>
+
+        {/* Comentarios (solo lectura para administrativo) */}
+        <Comentarios solicitudId={solicitudId} user={{ id: null }} canAdd={false} />
 
         <button
           onClick={handleSave}

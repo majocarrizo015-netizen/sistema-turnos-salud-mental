@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../../supabase'
+import { useAuth } from '../../context/AuthContext'
 import TopBar from '../../components/TopBar'
 import BadgePrioridad from '../../components/BadgePrioridad'
 import ProgressBar from '../../components/ProgressBar'
+import Comentarios from '../../components/Comentarios'
 
 const asistenciaConfig = {
   asistio: { label: 'Asistió', bg: '#E1F5EE', color: '#1D9E75' },
@@ -14,6 +16,7 @@ const asistenciaConfig = {
 
 export default function FichaPacienteAPS() {
   const { solicitudId } = useParams()
+  const { user } = useAuth()
   const navigate = useNavigate()
   const [solicitud, setSolicitud] = useState(null)
   const [sesiones, setSesiones] = useState([])
@@ -110,6 +113,9 @@ export default function FichaPacienteAPS() {
             <p className="text-sm text-text-primary">{solicitud.resumen_hc}</p>
           </div>
         )}
+
+        {/* Comentarios */}
+        <Comentarios solicitudId={solicitudId} user={user} canAdd accent="#7C3AAB" />
 
         <button
           onClick={() => navigate('/aps/panel')}

@@ -26,7 +26,7 @@ export default function AmpliacionSesiones() {
         .single()
       if (data) {
         setSolicitud(data)
-        setForm({ sesiones: data.sesiones || '', diagnostico: data.diagnostico || '', prioridad: data.prioridad || 'programado', justificacion: '' })
+        setForm({ sesiones: data.sesiones || '', diagnostico: data.diagnostico || '', prioridad: data.prioridad || 'programada', justificacion: '' })
       }
       setLoading(false)
     }
@@ -108,9 +108,9 @@ export default function AmpliacionSesiones() {
           <div>
             <label className="block text-xs text-text-secondary mb-1">Prioridad</label>
             <select value={form.prioridad} onChange={e => setForm(f => ({ ...f, prioridad: e.target.value }))} className="input-field bg-white">
-              <option value="urgente">Urgente</option>
-              <option value="prioritario">Prioritario</option>
-              <option value="programado">Programado</option>
+              <option value="alta">Alta</option>
+              <option value="moderada">Moderada</option>
+              <option value="programada">Programada</option>
             </select>
           </div>
           <div>

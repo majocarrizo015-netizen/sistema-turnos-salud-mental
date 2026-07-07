@@ -5,6 +5,8 @@ import { useAuth } from '../../context/AuthContext'
 import TopBar from '../../components/TopBar'
 import PopupSuccess from '../../components/PopupSuccess'
 import PopupError from '../../components/PopupError'
+import PopupModulo5 from '../../components/PopupModulo5'
+import { PRIORIDADES } from '../../components/BadgePrioridad'
 
 const modulosConfig = {
   1: { sesiones: 2, sesionesLocked: true, frecuencia: '', frecuenciaLocked: false },
@@ -15,7 +17,6 @@ const modulosConfig = {
 }
 
 const frecuencias = ['semanal', 'quincenal', 'mensual', 'a_definir']
-const prioridades = ['urgente', 'prioritario', 'programado']
 
 export default function NuevaSolicitudSM() {
   const { user } = useAuth()
@@ -27,6 +28,8 @@ export default function NuevaSolicitudSM() {
   })
   const [popup, setPopup] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [showModulo5, setShowModulo5] = useState(false)
+  const [modulo5Sel, setModulo5Sel] = useState(null)
 
   const selectModulo = (m) => {
     const cfg = modulosConfig[m]
@@ -36,6 +39,13 @@ export default function NuevaSolicitudSM() {
       sesiones: cfg.sesiones,
       frecuencia: cfg.frecuencia,
     }))
+    if (m === 5) setShowModulo5(true)
+  }
+
+  const handleModulo5Continuar = (sel) => {
+    setModulo5Sel(sel)
+    setForm(f => ({ ...f, psiquiatra_articulante: sel.texto }))
+    setShowModulo5(false)
   }
 
   const handleSave = async () => {
@@ -44,7 +54,8 @@ export default function NuevaSolicitudSM() {
       return
     }
     if (form.modulo === 5 && !form.psiquiatra_articulante) {
-      setPopup({ type: 'error', msg: 'Ingrese el psiquiatra articulante para Módulo 5' })
+      setPopup({ type: 'error', msg: 'Complete el tipo de consulta del Módulo 5' })
+      setShowModulo5(true)
       return
     }
     setLoading(true)
@@ -182,8 +193,17 @@ export default function NuevaSolicitudSM() {
 
           {form.modulo === 5 && (
             <div className="mt-3">
-              <Field label="Psiquiatra Articulante *">
-                <input value={form.psiquiatra_articulante} onChange={e => setForm(f => ({ ...f, psiquiatra_articulante: e.target.value }))} placeholder="Nombre del psiquiatra" className="input-field" />
+              <Field label="Tipo de consulta *">
+                <button
+                  type="button"
+                  onClick={() => setShowModulo5(true)}
+                  className="w-full text-left input-field flex items-center justify-between"
+                >
+                  <span className={form.psiquiatra_articulante ? 'text-text-primary' : 'text-text-secondary'}>
+                    {form.psiquiatra_articulante || 'Seleccionar tipo de consulta'}
+                  </span>
+                  <span className="text-xs text-profesional-sm-primary font-medium">Editar</span>
+                </button>
               </Field>
             </div>
           )}
@@ -197,7 +217,7 @@ export default function NuevaSolicitudSM() {
           <Field label="Prioridad *">
             <select value={form.prioridad} onChange={e => setForm(f => ({ ...f, prioridad: e.target.value }))} className="input-field">
               <option value="">Seleccionar</option>
-              {prioridades.map(p => <option key={p} value={p}>{p}</option>)}
+              {PRIORIDADES.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
             </select>
           </Field>
         </div>
@@ -210,6 +230,14 @@ export default function NuevaSolicitudSM() {
           {loading ? 'Guardando...' : 'Guardar'}
         </button>
       </div>
+
+      {showModulo5 && (
+        <PopupModulo5
+          initial={modulo5Sel}
+          onContinuar={handleModulo5Continuar}
+          onClose={() => setShowModulo5(false)}
+        />
+      )}
 
       {popup?.type === 'success' && <PopupSuccess message={popup.msg} onClose={() => navigate('/sm/panel')} />}
       {popup?.type === 'error' && <PopupError message={popup.msg} onClose={() => setPopup(null)} />}
