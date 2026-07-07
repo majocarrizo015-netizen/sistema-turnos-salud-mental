@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# React Router (SPA): toda ruta se sirve desde index.html para que el
+# enrutado del lado del cliente funcione y no dé 404 al refrescar.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
