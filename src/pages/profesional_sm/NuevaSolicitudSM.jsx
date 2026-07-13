@@ -24,7 +24,7 @@ export default function NuevaSolicitudSM() {
   const [form, setForm] = useState({
     apellido: '', nombre: '', dni: '', fecha_nacimiento: '', obra_social: '',
     modulo: null, sesiones: '', frecuencia: '', diagnostico: '', prioridad: '',
-    psiquiatra_articulante: '',
+    psiquiatra_articulante: '', observaciones: '',
   })
   const [popup, setPopup] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -91,6 +91,16 @@ export default function NuevaSolicitudSM() {
         fecha_solicitud: new Date().toISOString(),
       }).select().single()
       if (errSol) throw errSol
+
+      // Guardar la observación inicial como primer comentario del paciente
+      if (form.observaciones.trim()) {
+        await supabase.from('comentarios').insert({
+          solicitud_id: sol.id,
+          usuario_id: user.id,
+          texto: form.observaciones.trim(),
+          fecha: new Date().toISOString(),
+        })
+      }
 
       // Notify admin(s)
       const { data: admins } = await supabase.from('usuarios').select('id').eq('rol', 'administrativo')
@@ -219,6 +229,15 @@ export default function NuevaSolicitudSM() {
               <option value="">Seleccionar</option>
               {PRIORIDADES.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
             </select>
+          </Field>
+          <Field label="Observaciones iniciales">
+            <textarea
+              value={form.observaciones}
+              onChange={e => setForm(f => ({ ...f, observaciones: e.target.value }))}
+              rows={3}
+              placeholder="Comentario inicial sobre el paciente (opcional)"
+              className="w-full border border-border rounded-lg px-3 py-2.5 text-sm text-text-primary outline-none focus:border-profesional-sm-primary resize-none"
+            />
           </Field>
         </div>
 
